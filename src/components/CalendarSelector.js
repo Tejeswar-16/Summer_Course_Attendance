@@ -60,7 +60,7 @@ export default function CalendarSelector({ selectedDate, setSelectedDate }) {
       <div className="flex items-center gap-2">
         <button
           onClick={handlePrevDay}
-          className="p-2.5 rounded-xl border border-zinc-700/60 bg-zinc-800/40 text-zinc-300 hover:text-white hover:bg-zinc-750 hover:border-zinc-650 transition-all active:scale-95"
+          className="p-2.5 rounded-xl border border-zinc-700/60 bg-zinc-800/40 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-750 hover:border-zinc-650 transition-all active:scale-95"
           title="Previous Day"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -71,7 +71,7 @@ export default function CalendarSelector({ selectedDate, setSelectedDate }) {
           className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-all active:scale-95 ${
             selectedDate === todayStr
               ? 'bg-indigo-500 text-white border-indigo-450 shadow-md glow-primary'
-              : 'border-zinc-700/60 bg-zinc-800/40 text-zinc-300 hover:text-white hover:bg-zinc-750'
+              : 'border-zinc-700/60 bg-zinc-800/40 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-750'
           }`}
         >
           Today
@@ -80,7 +80,7 @@ export default function CalendarSelector({ selectedDate, setSelectedDate }) {
         <button
           onClick={handleNextDay}
           disabled={isTodayOrFuture}
-          className="p-2.5 rounded-xl border border-zinc-700/60 bg-zinc-800/40 text-zinc-300 hover:text-white hover:bg-zinc-750 hover:border-zinc-650 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+          className="p-2.5 rounded-xl border border-zinc-700/60 bg-zinc-800/40 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-750 hover:border-zinc-650 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
           title="Next Day"
         >
           <ChevronRight className="w-5 h-5" />

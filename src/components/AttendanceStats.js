@@ -62,7 +62,7 @@ export default function AttendanceStats({ totalStudents, presentCount, absentCou
             </div>
             
             <div className="relative z-10 mt-2">
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-zinc-100 tracking-tight">
                 {stat.value}
               </h3>
               

@@ -82,7 +82,7 @@ export default function RegisterPage() {
           <div className="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center text-white glow-primary border border-indigo-400 mb-3.5">
             <CheckSquare className="w-6 h-6" />
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Create Account</h1>
+          <h1 className="text-3xl font-black text-zinc-100 tracking-tight">Create Account</h1>
           <p className="text-sm text-zinc-400 mt-2">
             Register as a student to log your attendance.
           </p>
@@ -92,10 +92,10 @@ export default function RegisterPage() {
         <div className="glass-panel rounded-2xl p-8 border border-zinc-800/80">
 
           {/* ⚠️ Spelling Alert */}
-          <div className="flex items-start gap-3 p-4 mb-6 bg-amber-500/10 border border-amber-500/25 rounded-xl">
-            <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-300/90 leading-relaxed">
-              <span className="font-extrabold text-amber-300 block mb-1">Please check your spellings carefully!</span>
+          <div className="flex items-start gap-3 p-4 mb-6 bg-yellow-500/10 border border-yellow-500/25 rounded-xl">
+            <AlertTriangle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+            <div className="text-xs text-yellow-500/90 leading-relaxed">
+              <span className="font-extrabold text-yellow-500 block mb-1">Please check your spellings carefully!</span>
               Your <span className="font-bold">Name</span>, <span className="font-bold">Samithi</span>, and <span className="font-bold">District</span> will be printed exactly as entered on your attendance certificates.
             </div>
           </div>

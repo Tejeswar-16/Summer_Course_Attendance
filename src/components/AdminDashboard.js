@@ -124,7 +124,7 @@ export default function AdminDashboard({
             <span className="px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-widest rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/35">
               Admin Portal
             </span>
-            <h1 className="text-2xl font-black text-white tracking-tight mt-1.5">Roster &amp; Metrics</h1>
+            <h1 className="text-2xl font-black text-zinc-100 tracking-tight mt-1.5">Roster &amp; Metrics</h1>
             <p className="text-sm text-zinc-400 mt-1">
               Review and monitor student check-in compliance logs in real-time.
             </p>
@@ -168,7 +168,7 @@ export default function AdminDashboard({
               }
             </div>
             <div>
-              <h2 className="text-base font-extrabold text-white tracking-tight">
+              <h2 className="text-base font-extrabold text-zinc-100 tracking-tight">
                 Attendance Gate
               </h2>
               <p className={`text-xs font-semibold mt-0.5 transition-all duration-500 ${
@@ -269,7 +269,7 @@ export default function AdminDashboard({
                     onClick={() => setStatusFilter('all')}
                     className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       statusFilter === 'all'
-                        ? 'bg-zinc-800 text-white border border-zinc-700/60 shadow'
+                        ? 'bg-zinc-800 text-zinc-100 border border-zinc-700/60 shadow'
                         : 'text-zinc-400 hover:text-zinc-200 border border-transparent'
                     }`}
                   >

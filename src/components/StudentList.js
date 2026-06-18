@@ -51,7 +51,7 @@ export default function StudentList({
       {/* Header & Search */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
         <div>
-          <h2 className="text-xl font-bold text-white">Registered Students</h2>
+          <h2 className="text-xl font-bold text-zinc-100">Registered Students</h2>
           <p className="text-sm text-zinc-400 mt-1">
             Showing {filteredStudents.length} of {students.length} students enrolled.
           </p>

@@ -72,7 +72,7 @@ export default function StudentDashboard({
           </div>
           <div>
             <p className="text-xs text-zinc-500 font-semibold uppercase tracking-wider">Today's Date</p>
-            <h1 className="text-lg font-extrabold text-white mt-0.5">{formattedDate}</h1>
+            <h1 className="text-lg font-extrabold text-zinc-100 mt-0.5">{formattedDate}</h1>
           </div>
         </div>
 
@@ -87,7 +87,7 @@ export default function StudentDashboard({
                 <Award className="w-7 h-7" />
               </div>
               <div>
-                <h2 className="text-base font-extrabold text-white tracking-tight">
+                <h2 className="text-base font-extrabold text-zinc-100 tracking-tight">
                   🎓 Your Certificate is Ready!
                 </h2>
                 <p className="text-xs text-amber-300/80 mt-1 leading-relaxed">
@@ -105,7 +105,7 @@ export default function StudentDashboard({
             <button
               onClick={handleDownloadCertificate}
               disabled={certDownloading}
-              className="relative z-10 flex items-center gap-2.5 px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-extrabold text-sm border border-amber-400 transition-all active:scale-95 cursor-pointer disabled:opacity-60 shadow-lg shrink-0"
+              className="relative z-10 flex items-center gap-2.5 px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm border border-amber-400 transition-all active:scale-95 cursor-pointer disabled:opacity-60 shadow-lg shrink-0"
             >
               {certDownloading
                 ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating...</>

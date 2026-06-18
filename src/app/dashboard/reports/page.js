@@ -306,12 +306,12 @@ export default function ReportsPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="p-2.5 rounded-xl border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:bg-zinc-800 transition active:scale-95"
+              className="p-2.5 rounded-xl border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition active:scale-95"
             >
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div>
-              <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+              <h1 className="text-2xl font-black text-zinc-100 tracking-tight flex items-center gap-2">
                 <FileText className="w-6 h-6 text-indigo-400" /> Attendance Reports
               </h1>
               <p className="text-sm text-zinc-400 mt-1">Cumulative attendance rates &amp; certificate publishing.</p>
@@ -369,7 +369,7 @@ export default function ReportsPage() {
               <div className="flex flex-col gap-4 border-b border-zinc-800/80 pb-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <h2 className="text-lg font-bold text-white">Student Compliance Summary</h2>
+                    <h2 className="text-lg font-bold text-zinc-100">Student Compliance Summary</h2>
                     <p className="text-xs text-zinc-450 mt-1">
                       {startDate} → {endDate} &nbsp;·&nbsp;
                       <span className="text-indigo-400 font-bold">{filteredRows.length} students shown</span>
@@ -377,7 +377,7 @@ export default function ReportsPage() {
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <button onClick={exportCSV} disabled={filteredRows.length === 0}
-                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold transition active:scale-95 disabled:opacity-40 cursor-pointer">
+                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500/20 font-bold transition active:scale-95 disabled:opacity-40 cursor-pointer">
                       <Download className="w-3.5 h-3.5" /> Export
                     </button>
                   </div>
@@ -471,7 +471,7 @@ export default function ReportsPage() {
                   )}
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-white text-base">
+                  <h3 className="font-extrabold text-zinc-400 text-base">
                     {publishSuccess 
                       ? '✅ Certificates Published!' 
                       : publishedCertConfig 
@@ -522,10 +522,10 @@ export default function ReportsPage() {
                   disabled={publishing || filteredRows.length === 0}
                   className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-extrabold text-sm border transition-all active:scale-95 cursor-pointer disabled:opacity-50 shadow-md ${
                     publishSuccess
-                      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25'
+                      ? 'bg-green-500/15 text-black-300 border-green-500/30 hover:bg-green-500/25'
                       : publishedCertConfig
-                        ? 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/25'
-                        : 'bg-amber-500/15 text-amber-300 border-amber-500/30 hover:bg-amber-500/25'
+                        ? 'bg-green-500/15 text-black-300 border-green-500/30 hover:bg-green-500/25'
+                        : 'bg-yellow-500/15 text-black-300 border-yellow-500/30 hover:bg-yellow-600/25'
                   }`}
                 >
                   {publishing ? (
