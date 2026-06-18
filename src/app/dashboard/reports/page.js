@@ -11,6 +11,8 @@ import {
   getDocs, 
   doc,
   setDoc,
+  deleteDoc,
+  onSnapshot,
   query, 
   where 
 } from '@/lib/firebase';
@@ -26,7 +28,9 @@ import {
   Hash,
   Award,
   CheckCircle2,
-  Send
+  Send,
+  Trash2,
+  EyeOff
 } from 'lucide-react';
 
 export default function ReportsPage() {
@@ -61,6 +65,24 @@ export default function ReportsPage() {
   // Certificate publish state
   const [publishing, setPublishing]   = useState(false);
   const [publishSuccess, setPublishSuccess] = useState(false);
+  const [publishedCertConfig, setPublishedCertConfig] = useState(null);
+  const [unpublishing, setUnpublishing] = useState(false);
+
+  // Subscribe to published certificates state in real-time
+  useEffect(() => {
+    if (!user || user.role !== 'admin') return;
+    const certRef = doc(db, 'settings', 'certificates');
+    const unsub = onSnapshot(certRef, (snap) => {
+      if (snap.exists()) {
+        setPublishedCertConfig(snap.data());
+      } else {
+        setPublishedCertConfig(null);
+      }
+    }, (err) => {
+      console.error('Error fetching published certificates:', err);
+    });
+    return () => unsub();
+  }, [user]);
 
   // Auth Guard: Admins only
   useEffect(() => {
@@ -244,6 +266,22 @@ export default function ReportsPage() {
     }
   };
 
+  // ── Unpublish Certificates ────────────────────────────────────────────────
+  // Deletes the certificates document from Firestore so students can no longer download
+  const handleUnpublishCertificates = async () => {
+    setUnpublishing(true);
+    setPublishSuccess(false);
+    setError('');
+    try {
+      await deleteDoc(doc(db, 'settings', 'certificates'));
+    } catch (err) {
+      console.error('Error unpublishing certificates:', err);
+      setError('Failed to unpublish certificates. Please check Firestore permissions.');
+    } finally {
+      setUnpublishing(false);
+    }
+  };
+
   // ─────────────────────────────────────────────────────────────────────────
   if (authLoading || (user && user.role !== 'admin')) {
     return (
@@ -339,12 +377,8 @@ export default function ReportsPage() {
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <button onClick={exportCSV} disabled={filteredRows.length === 0}
-                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-zinc-700/60 bg-zinc-900/60 text-zinc-300 hover:text-white hover:bg-zinc-800 text-xs font-bold transition active:scale-95 disabled:opacity-40 cursor-pointer">
-                      <Download className="w-3.5 h-3.5" /> CSV
-                    </button>
-                    <button onClick={exportExcel} disabled={filteredRows.length === 0}
                       className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold transition active:scale-95 disabled:opacity-40 cursor-pointer">
-                      <Download className="w-3.5 h-3.5" /> Excel
+                      <Download className="w-3.5 h-3.5" /> Export
                     </button>
                   </div>
                 </div>
@@ -413,51 +447,96 @@ export default function ReportsPage() {
             </div>
 
             {/* ── Certificate Publishing Panel ── */}
-            <div className={`rounded-2xl border p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 transition-all duration-500 animate-fade-in ${
+            <div className={`rounded-2xl border p-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5 transition-all duration-500 animate-fade-in ${
               publishSuccess 
                 ? 'bg-emerald-500/5 border-emerald-500/25' 
-                : 'glass-panel border-amber-500/20 bg-amber-500/5'
+                : publishedCertConfig
+                  ? 'bg-indigo-500/5 border-indigo-500/25'
+                  : 'glass-panel border-amber-500/20 bg-amber-500/5'
             }`}>
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-xl border shrink-0 ${publishSuccess ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400' : 'bg-amber-500/10 border-amber-500/25 text-amber-400'}`}>
-                  {publishSuccess ? <CheckCircle2 className="w-6 h-6" /> : <Award className="w-6 h-6" />}
+                <div className={`p-3 rounded-xl border shrink-0 ${
+                  publishSuccess 
+                    ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400' 
+                    : publishedCertConfig
+                      ? 'bg-indigo-500/15 border-indigo-500/30 text-indigo-400'
+                      : 'bg-amber-500/10 border-amber-500/25 text-amber-400'
+                }`}>
+                  {publishSuccess ? (
+                    <CheckCircle2 className="w-6 h-6" />
+                  ) : publishedCertConfig ? (
+                    <CheckCircle2 className="w-6 h-6" />
+                  ) : (
+                    <Award className="w-6 h-6" />
+                  )}
                 </div>
                 <div>
                   <h3 className="font-extrabold text-white text-base">
-                    {publishSuccess ? '✅ Certificates Published!' : '🎓 Publish Certificates'}
+                    {publishSuccess 
+                      ? '✅ Certificates Published!' 
+                      : publishedCertConfig 
+                        ? '🟢 Certificates Currently Active' 
+                        : '🎓 Publish Certificates'}
                   </h3>
                   {publishSuccess ? (
                     <p className="text-xs text-emerald-400 mt-1 font-semibold">
                       {filteredRows.length} student{filteredRows.length !== 1 ? 's' : ''} can now download their certificate from the student dashboard.
                     </p>
+                  ) : publishedCertConfig ? (
+                    <div className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                      <p className="font-semibold text-zinc-300">
+                        {publishedCertConfig.studentCount} student{publishedCertConfig.studentCount !== 1 ? 's' : ''} are currently authorized to download certificates.
+                      </p>
+                      <p className="text-[11px] text-zinc-500 mt-0.5">
+                        Active Filter Range: <span className="font-bold text-zinc-400">{publishedCertConfig.dateRange?.start}</span> to <span className="font-bold text-zinc-400">{publishedCertConfig.dateRange?.end}</span> (Min Days: <span className="font-bold text-zinc-400">{publishedCertConfig.minDaysFilter}</span>)
+                      </p>
+                    </div>
                   ) : (
                     <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
                       This will make certificates available for the <span className="font-bold text-amber-300">{filteredRows.length} student{filteredRows.length !== 1 ? 's' : ''}</span> in the current filtered list.
                       Each student will see a <strong>Download Certificate</strong> button on their dashboard.
                       <br/>
-                      <span className="text-zinc-500">Note: Publishing again will overwrite the previous list.</span>
+                      <span className="text-zinc-500">Note: Students can only download if their attendance matches current filters.</span>
                     </p>
                   )}
                 </div>
               </div>
 
-              <button
-                onClick={handlePublishCertificates}
-                disabled={publishing || filteredRows.length === 0}
-                className={`flex items-center gap-2.5 px-6 py-3 rounded-xl font-extrabold text-sm border transition-all active:scale-95 cursor-pointer disabled:opacity-50 shadow-md shrink-0 ${
-                  publishSuccess
-                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25'
-                    : 'bg-amber-500/15 text-amber-300 border-amber-500/30 hover:bg-amber-500/25'
-                }`}
-              >
-                {publishing ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" /> Publishing...</>
-                ) : publishSuccess ? (
-                  <><Send className="w-4 h-4" /> Re-publish</>
-                ) : (
-                  <><Send className="w-4 h-4" /> Publish Certificates</>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                {publishedCertConfig && (
+                  <button
+                    onClick={handleUnpublishCertificates}
+                    disabled={unpublishing}
+                    className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm border border-rose-500/30 bg-rose-500/10 text-rose-450 hover:bg-rose-500/20 transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+                  >
+                    {unpublishing ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" /> Unpublishing...</>
+                    ) : (
+                      <><EyeOff className="w-4 h-4" /> Unpublish</>
+                    )}
+                  </button>
                 )}
-              </button>
+
+                <button
+                  onClick={handlePublishCertificates}
+                  disabled={publishing || filteredRows.length === 0}
+                  className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-extrabold text-sm border transition-all active:scale-95 cursor-pointer disabled:opacity-50 shadow-md ${
+                    publishSuccess
+                      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25'
+                      : publishedCertConfig
+                        ? 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/25'
+                        : 'bg-amber-500/15 text-amber-300 border-amber-500/30 hover:bg-amber-500/25'
+                  }`}
+                >
+                  {publishing ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Publishing...</>
+                  ) : publishedCertConfig ? (
+                    <><Send className="w-4 h-4" /> Re-publish / Update</>
+                  ) : (
+                    <><Send className="w-4 h-4" /> Publish Certificates</>
+                  )}
+                </button>
+              </div>
             </div>
           </>
         ) : null}
