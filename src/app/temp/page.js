@@ -213,56 +213,49 @@ export default function TempPage() {
               </div>
             </div>
 
-            {/* Table */}
-            <div className="overflow-hidden border border-zinc-200 rounded-xl bg-white/40">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-zinc-100 border-b border-zinc-200 text-zinc-500 text-xs font-bold uppercase tracking-wider">
-                    <th className="p-4 text-white">Student Name</th>
-                    <th className="p-4 text-white">District</th>
-                    <th className="p-4 text-white text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-200">
-                  {filteredStudents.length === 0 ? (
-                    <tr>
-                      <td colSpan="3" className="py-10 text-center text-zinc-400 text-sm font-medium">
-                        No students found matching your search.
-                      </td>
-                    </tr>
-                  ) : (
-                    filteredStudents.map((student) => {
-                      const isRowDownloading = downloadingUid === student.id;
-                      return (
-                        <tr 
-                          key={student.id} 
-                          className="hover:bg-zinc-50/50 transition duration-150"
+            {/* Roster List (Responsive flex layout instead of rigid table) */}
+            <div className="border border-zinc-200 rounded-xl bg-white/40 overflow-hidden divide-y divide-zinc-200">
+              {filteredStudents.length === 0 ? (
+                <div className="py-12 text-center text-zinc-400 text-sm font-medium">
+                  No students found matching your search.
+                </div>
+              ) : (
+                filteredStudents.map((student) => {
+                  const isRowDownloading = downloadingUid === student.id;
+                  return (
+                    <div 
+                      key={student.id} 
+                      className="flex flex-col sm:flex-row sm:items-center justify-between p-5 gap-4 hover:bg-zinc-50/50 transition duration-150"
+                    >
+                      {/* Name & District Info */}
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-zinc-800 text-base truncate">{student.name}</h3>
+                        <p className="text-zinc-500 text-xs font-semibold mt-1 flex items-center gap-1.5">
+                          <span className="px-2 py-0.5 rounded-md bg-zinc-100 border border-zinc-200 text-zinc-650 font-bold uppercase text-[9px] tracking-wider">
+                            District
+                          </span>
+                          {student.district || '—'}
+                        </p>
+                      </div>
+
+                      {/* Download Action */}
+                      <div className="shrink-0 w-full sm:w-auto">
+                        <button
+                          onClick={() => handleDownload(student)}
+                          disabled={downloadingUid !== null}
+                          className="inline-flex items-center justify-center gap-1.5 w-full sm:w-auto px-4 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-650 text-white font-extrabold text-xs border border-indigo-450 transition-all active:scale-95 cursor-pointer disabled:opacity-50 shadow-sm"
                         >
-                          <td className="p-4">
-                            <span className="font-bold text-black-800 text-sm">{student.name}</span>
-                          </td>
-                          <td className="p-4">
-                            <span className="text-zinc-500 text-xs font-semibold">{student.district || '—'}</span>
-                          </td>
-                          <td className="p-4 text-right">
-                            <button
-                              onClick={() => handleDownload(student)}
-                              disabled={downloadingUid !== null}
-                              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-650 text-white font-extrabold text-xs border border-indigo-450 transition-all active:scale-95 cursor-pointer disabled:opacity-50 shadow-sm"
-                            >
-                              {isRowDownloading ? (
-                                <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generating...</>
-                              ) : (
-                                <><Download className="w-3.5 h-3.5" /> Download Certificate</>
-                              )}
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
+                          {isRowDownloading ? (
+                            <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generating...</>
+                          ) : (
+                            <><Download className="w-3.5 h-3.5" /> Download Certificate</>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         )}
