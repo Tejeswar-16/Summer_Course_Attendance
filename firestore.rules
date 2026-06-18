@@ -1,0 +1,45 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Checks if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: Checks if the user is writing their own document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Rules for the 'users' collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // Rules for the 'attendance_records' collection
+    // Document ID format: {uid}_{date} (e.g., "user123_2026-06-11")
+    match /attendance_records/{recordId} {
+      // Any authenticated student can read all attendance records (to see dashboard)
+      allow read: if isAuthenticated();
+
+      // Write permission (create, update) is allowed ONLY if:
+      // 1. The user is authenticated
+      // 2. The document ID matches their UID combined with the date field in the write request
+      // 3. The uid field inside the document matches their authenticated UID
+      allow write: if isAuthenticated() && 
+                    recordId == request.auth.uid + "_" + request.resource.data.date &&
+                    request.resource.data.uid == request.auth.uid;
+    }
+
+    // Rules for the 'settings' collection (attendance gate, etc.)
+    // Any authenticated user can read; any authenticated user can write.
+    // Admin-only enforcement is handled on the client side.
+    match /settings/{settingId} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}
