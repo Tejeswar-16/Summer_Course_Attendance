@@ -108,11 +108,11 @@ export async function generateCertificatePDF(studentName, district) {
     templateImg.onerror = () => {
       reject(new Error(
         'Certificate template not found. ' +
-        'Please save your template as: public/certificate_template.jpg'
+        'Please save your template as: public/certificate_template.png'
       ));
     };
 
     // Load from Next.js public folder
-    templateImg.src = '/certificate_template.jpg?' + Date.now(); // cache-bust
+    templateImg.src = '/certificate_template.png?' + Date.now(); // cache-bust
   });
 }
