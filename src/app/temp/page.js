@@ -137,12 +137,6 @@ export default function TempPage() {
             <span className="font-extrabold text-zinc-100 text-lg tracking-tight">Sri Sathya Sai Summer Course</span>
           </div>
         </div>
-        <Link
-          href="/"
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-zinc-200/80 bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-900 text-xs font-bold transition active:scale-95 cursor-pointer"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Main
-        </Link>
       </nav>
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex flex-col gap-6 animate-fade-in">
@@ -153,15 +147,6 @@ export default function TempPage() {
               <Award className="w-6 h-6 text-indigo-500" />Certificate Issuance
             </h1>
           </div>
-          {students.length > 0 && (
-            <button
-              onClick={loadCSV}
-              disabled={loading}
-              className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-100 text-xs font-bold transition active:scale-95 cursor-pointer shadow-sm"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> Reload CSV
-            </button>
-          )}
         </div>
 
         {/* Loading Spinner */}
@@ -177,21 +162,6 @@ export default function TempPage() {
           <div className="flex items-start gap-2.5 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 rounded-xl text-sm font-medium">
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
             <span>{error}</span>
-          </div>
-        )}
-
-        {/* Success Header Status */}
-        {students.length > 0 && !loading && (
-          <div className="glass-panel rounded-2xl p-5 border border-zinc-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-indigo-500">
-                <FileSpreadsheet className="w-6 h-6" />
-              </div>
-              <div className="text-left">
-                <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Loaded Dataset</span>
-                <h2 className="text-sm font-bold text-zinc-100 mt-0.5">public/students.csv ({students.length} records parsed)</h2>
-              </div>
-            </div>
           </div>
         )}
 

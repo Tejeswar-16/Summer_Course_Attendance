@@ -17,11 +17,11 @@
 // ── Position constants (fraction of template image dimensions) ──────────────
 // NAME: positioned after the "Selvan/Selvi" honorific text on the first body line
 const NAME_X_RATIO   = 0.586;   // ~58.6% from left — starts after "Selvan/Selvi"
-const NAME_Y_RATIO   = 0.460;   // ~46.3% from top  — aligned with first line baseline
+const NAME_Y_RATIO   = 0.454;   // ~46.3% from top  — aligned with first line baseline
 
 // DISTRICT: positioned in the blank space after "from" on the second body line
 const DIST_X_RATIO   = 0.404;   // ~40.4% from left — center-aligned in the space
-const DIST_Y_RATIO   = 0.520;   // ~52.0% from top  — aligned with second line baseline
+const DIST_Y_RATIO   = 0.512;   // ~52.0% from top  — aligned with second line baseline
 
 // Font size as a fraction of image height (e.g. 0.036 × 750px ≈ 27px)
 const FONT_SIZE_RATIO = 0.036;
