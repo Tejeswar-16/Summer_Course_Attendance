@@ -188,8 +188,8 @@ export default function AdminDashboard({
             disabled={gateLoading}
             className={`relative z-10 flex items-center gap-2.5 px-5 py-3 rounded-xl font-extrabold text-sm border transition-all active:scale-95 cursor-pointer disabled:opacity-60 shadow-md ${
               gateOpen
-                ? 'bg-rose-500/10 text-rose-400 border-rose-500/30 hover:bg-rose-500/20'
-                : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25'
+                ? 'bg-rose-500/10 text-gray-800 border-rose-500/30 hover:bg-rose-500/20'
+                : 'bg-emerald-500/15 text-gray-800 border-emerald-500/30 hover:bg-emerald-500/25'
             }`}
           >
             {gateLoading ? (
