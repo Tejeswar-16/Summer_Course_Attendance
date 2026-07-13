@@ -75,7 +75,7 @@ export default function LoginPage() {
           <div className="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center text-white glow-primary border border-indigo-400 mb-3.5">
             <CheckSquare className="w-6 h-6" />
           </div>
-          <h1 className="text-3xl font-black text-zinc-100 tracking-tight">Sri Sathya Sai Summer Course Attendance</h1>
+          <h1 className="text-3xl font-black text-zinc-100 tracking-tight">Balvikas Training</h1>
           <h1 className="text-2xl font-black text-blue-500 tracking-tight">Welcome Back</h1>
           <p className="text-sm text-zinc-400 mt-2">
             Log in to manage and record your attendance.

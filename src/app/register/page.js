@@ -92,13 +92,13 @@ export default function RegisterPage() {
         <div className="glass-panel rounded-2xl p-8 border border-zinc-800/80">
 
           {/* ⚠️ Spelling Alert */}
-          <div className="flex items-start gap-3 p-4 mb-6 bg-yellow-500/10 border border-yellow-500/25 rounded-xl">
+          {/* <div className="flex items-start gap-3 p-4 mb-6 bg-yellow-500/10 border border-yellow-500/25 rounded-xl">
             <AlertTriangle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
             <div className="text-xs text-yellow-500/90 leading-relaxed">
               <span className="font-extrabold text-yellow-500 block mb-1">Please check your spellings carefully!</span>
               Your <span className="font-bold">Name</span>, <span className="font-bold">Samithi</span>, and <span className="font-bold">District</span> will be printed exactly as entered on your attendance certificates.
             </div>
-          </div>
+          </div> */}
 
           {error && (
             <div className="flex items-start gap-2.5 p-4 mb-6 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl text-sm font-medium animate-fade-in">
