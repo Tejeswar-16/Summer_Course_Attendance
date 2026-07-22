@@ -35,7 +35,7 @@ export default function Navbar() {
           <CheckSquare className="w-5 h-5" />
         </div>
         <div>
-          <span className="font-extrabold text-zinc-100 text-lg tracking-tight">Balvikas Training</span>
+          <span className="font-extrabold text-zinc-100 text-lg tracking-tight">Sri Sathya Sai Summer Course</span>
           <span className="text-xs text-indigo-400 font-bold block -mt-1 uppercase tracking-widest">Attendance</span>
         </div>
       </div>
